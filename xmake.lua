@@ -11,12 +11,12 @@ if is_mode("coverage") then
     add_ldflags("--coverage")
 end
 
-add_repositories("local-repo build")
+--add_repositories("local-repo build")
 
 add_requires("gtest")
 -- 如果编译失败就注释下面这行
-add_requires("gmock") 
-add_requires("asio")
+--add_requires("gmock") 
+--add_requires("asio")
 add_requires("pybind11")
 add_requires("spdlog", { system = false })
 add_requires("toml11", { system = false })
@@ -235,7 +235,7 @@ target("test_wal")
     add_includedirs("include", {public = true})
     add_packages("gtest", "toml11", "spdlog")
     -- 如果编译失败就注释下面这行依赖
-    add_packages("gmock")
+  --  add_packages("gmock")
 
 target("test_wisckey")
     set_kind("binary")
@@ -266,7 +266,7 @@ target("server")
     add_files("server/src/*.cpp")
     add_deps("redis")
     add_includedirs("include", {public = true})
-    add_packages("asio")
+  --  add_packages("asio")
 
 -- ============ Python 绑定 ============
 
