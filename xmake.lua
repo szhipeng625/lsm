@@ -2,7 +2,11 @@
 set_project("tiny-lsm")
 set_version("0.0.1")
 set_languages("c++20")
-
+-- Windows/MSVC 下让 CMake 依赖包使用 Visual Studio 生成器，避免 xmake 模拟 ninja 导致版本检测失败
+set_policy("package.cmake_generator.ninja", false)
+if is_plat("windows") then
+    add_cxxflags("/utf-8")
+end
 add_rules("mode.debug", "mode.release", "mode.coverage")
 
 -- 在 coverage 模式下设置 flags
@@ -11,12 +15,12 @@ if is_mode("coverage") then
     add_ldflags("--coverage")
 end
 
---add_repositories("local-repo build")
+--    add_repositories("local-repo build")
 
 add_requires("gtest")
 -- 如果编译失败就注释下面这行
 --add_requires("gmock") 
---add_requires("asio")
+add_requires("asio")
 add_requires("pybind11")
 add_requires("spdlog", { system = false })
 add_requires("toml11", { system = false })
@@ -117,8 +121,10 @@ target("lsm_shared")
     add_includedirs("include", {public = true})  -- 确保包含路径正确
     if is_plat("windows") then
         set_extension(".dll")
+        -- 定义 TINYLSM_EXPORTS 后，头文件中的 TINYLSM_API 展开为 dllexport
         add_defines("TINYLSM_EXPORTS")
-        add_cxxflags("/LD")
+        -- STL 类型跨 DLL 边界产生的 C4251/C4275 属预期，统一抑制
+        add_cxxflags("/LD", "/wd4251", "/wd4275")
     else
         set_extension(".so")
     end
@@ -266,7 +272,7 @@ target("server")
     add_files("server/src/*.cpp")
     add_deps("redis")
     add_includedirs("include", {public = true})
-  --  add_packages("asio")
+    add_packages("asio")
 
 -- ============ Python 绑定 ============
 
@@ -290,7 +296,6 @@ else
         add_includedirs("include", {public = true})
         set_filename("lsm_pybind.so")
         add_ldflags("-Wl,-rpath,$ORIGIN")
-        add_defines("TINYLSM_EXPORT=__attribute__((visibility(\"default\")))")
         add_cxxflags("-fvisibility=hidden")
 end
 

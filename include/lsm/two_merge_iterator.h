@@ -1,13 +1,14 @@
 #pragma once
 
 #include "iterator/iterator.h"
+#include "lsm/export.h"
 #include "sst/sst_iterator.h"
 
 #include <memory>
 
 namespace tiny_lsm {
 
-class TwoMergeIterator : public BaseIterator {
+class TINYLSM_API TwoMergeIterator : public BaseIterator {
 private:
   std::shared_ptr<BaseIterator> it_a;
   std::shared_ptr<BaseIterator> it_b;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lsm/export.h"
 #include "utils/files.h"
 #include "wal/wal.h"
 #include <atomic>
@@ -31,7 +32,7 @@ inline std::string isolation_level_to_string(const IsolationLevel &level);
 class LSMEngine;
 class TranManager;
 
-class TranContext {
+class TINYLSM_API TranContext {
   friend class TranManager;
 
 public:

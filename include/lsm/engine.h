@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lsm/export.h"
 #include "memtable/memtable.h"
 #include "sst/sst.h"
 #include "compact.h"
@@ -85,7 +86,7 @@ private:
                                                       size_t target_level);
 };
 
-class LSM {
+class TINYLSM_API LSM {
 private:
   std::shared_ptr<LSMEngine> engine;
   std::shared_ptr<TranManager> tran_manager_;

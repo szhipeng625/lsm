@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lsm/export.h"
+
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -19,7 +21,7 @@ enum class IteratorType {
   LevelIterator,
 };
 
-class BaseIterator {
+class TINYLSM_API BaseIterator {
 public:
   using value_type = std::pair<std::string, std::string>;
   using pointer = value_type *;

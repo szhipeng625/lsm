@@ -1,6 +1,8 @@
 .idea
+.vs
 .vscode
 .xmake
+sdk.dlldemo
 build
 sdk/tinylsm/dist
 sdk/tinylsm/build

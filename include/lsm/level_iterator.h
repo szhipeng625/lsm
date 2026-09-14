@@ -1,5 +1,6 @@
 #pragma once
 #include "iterator/iterator.h"
+#include "lsm/export.h"
 #include <memory>
 #include <optional>
 #include <shared_mutex>
@@ -7,7 +8,7 @@
 namespace tiny_lsm {
 class LSMEngine;
 
-class Level_Iterator : public BaseIterator {
+class TINYLSM_API Level_Iterator : public BaseIterator {
 public:
   Level_Iterator() = default;
   Level_Iterator(std::shared_ptr<LSMEngine> engine_, uint64_t max_tranc_id);

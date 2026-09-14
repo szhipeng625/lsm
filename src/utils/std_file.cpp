@@ -23,7 +23,8 @@ namespace tiny_lsm {
 // 允许在句柄仍打开时删除文件（对应 POSIX 的 unlink）。
 
 namespace {
-constexpr void *kInvalidHandle = reinterpret_cast<void *>(static_cast<intptr_t>(-1));
+// reinterpret_cast 在 MSVC 下不能用于 constexpr 常量表达式，改用 void* const
+void *const kInvalidHandle = reinterpret_cast<void *>(static_cast<intptr_t>(-1));
 }
 
 bool StdFile::open(const std::string &filename, bool create) {

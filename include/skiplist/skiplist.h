@@ -94,6 +94,7 @@ private:
 
 class SkipList {
 private:
+  uint64_t tranc_id_;
   std::shared_ptr<SkipListNode>
       head; // 跳表的头节点，不存储实际数据，用于遍历跳表
   int max_level;     // 跳表的最大层级数，限制跳表的高度
